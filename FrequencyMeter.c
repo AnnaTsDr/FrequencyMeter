@@ -1,432 +1,325 @@
 #include<reg52.h> 
 init(); 
-lcd 
-init(); 
-void 
-lcd 
-disp(char 
-[D; 
-w 
-d); 
-line 
-1(); 
-line 
-2); 
+lcd_init(); 
+void lcd_disp(char []); 
+w_d(); 
+line_1(); 
+line_2(); 
 delay(long); 
-void 
-load 
-t0); 
-int 
-kbd 
-scan(); 
-void 
-time); 
-sbit 
-P1 
-7-P1^7; 
-char 
-xdata 
-lcdp 
-at_ 
-Ox01; 
-char 
-xdata 
-lcdc 
-at 
-Ox00; 
-unsigned 
-int 
-freq-0; 
-unsigned 
-int 
-save=0; 
-int 
-a-0; 
-char 
-bdata 
-y; 
-sbit 
-f-y^0; 
-sbit 
-col 
-0=Pl^4; 
-sbit 
-col 
-1=P1^5; 
-sbit 
-col 
-2=PI^6; 
-{ 
-40 
-:nun 
-np5 
-nIN 
-6.4.1 
+void load_t0(); 
+int kbd_scan(); 
+void time(); 
+sbit P1_7=P1^7; 
+char xdata lcdp_at_0x01; 
+char xdata lcdc_at_0x00; 
+unsigned int freq=0; 
+unsigned int save=0; 
+int a=0; 
+char bdata y; 
+sbit f=y^0; 
+sbit col_0=Pl^4; 
+sbit col_1=P1^5; 
+sbit col_2=PI^6; 
+ 
 
-170 
-T 
 main() 
+{
 int 
 i,x[4]; 
 init(); 
-lcd 
-init); 
-lcd 
-disp("welcome"); 
-line 
-20; 
-lcd 
-disp("choose: 
-1,2,*,#"); 
-while 
-(kbd 
-scan()F13) 
-w_ 
-); 
-while 
-(1) 
-line 
-10; 
-lcd 
-disp("choose 
-key"); 
-line 
-20; 
-lcd 
-disp("for 
-oper.."); 
-while 
-(kbd 
-scan()=13); 
-switch(kbd 
-scan)) 
+lcd_init); 
+lcd_disp("welcome"); 
+line_2(); 
+lcd_disp("choose: 1,2,*,#"); 
+while (kbd_scan()==13) w_d(); 
+while (1) 
+  {
+line_1(); 
+lcd_disp("choose key"); 
+line_2(); 
+lcd_disp("for oper.."); 
+while (kbd_scan()==13); 
+switch(kbd_scan)) 
 { 
-case 
-1: 
-line 
-10; 
-led 
-disp("frequency 
-is:"); 
-while(f) 
-EX0=0; 
-H 
-41 
-
-line 
-20; 
-for(i-3;i>-0;i-) 
-x[i]-(save%10)+0x30; 
-for(i-0;i<4;i++) 
-save=save/10: 
-lcdp=x(i]; 
-delay(20); 
-f-0; 
-break; 
-SBUF=xi]; 
-while(!TI) 
-w_d); 
-lcd 
-disp(" 
-Hz"); 
-TI-0; 
-EX0=1; 
-delay(50000); 
-load 
-t0); 
-case 
-2: 
-line 
-10; 
-lcd 
-disp("time 
-cycle 
-is:"); 
-line 
-20; 
-42 
-
-} 
-time(); 
-delay(50000); 
-break; 
-case 
-10: 
-line 
-10; 
-lcd 
-disp("YANA"); 
-line 
-20; 
-lcd_disp("abizyana"); 
-delay(50000); 
-break; 
-case 
-12: 
-line 
-10: 
-lcd 
-disp("ANNA"); 
-line 
-2); 
-lcd 
-disp("BANANNA"): 
-delay(50000); 
-break; 
-default: 
-break; 
-43 
+  case 1: 
+    line_1(); 
+    led_disp("frequency is:"); 
+    while(f) 
+      {
+        EX0=0; 
+        line_2(); 
+        for(i-3;i>-0;i-) 
+          {
+            x[i]-(save%10)+0x30; 
+            save=save/10: 
+              }
+        for(i-0;i<4;i++) 
+          {
+            lcdp=x(i]; 
+            delay(20);
+            SBUF=x[i]; 
+            TI=0; 
+          }
+        lcd_disp("Hz");
+        EX0=1; 
+        delay(50000); 
+        load_t0();
+        f=0; 
+      }
+    break; 
+  case 2: 
+    line_1(); 
+    lcd_disp("time cycle is:"); 
+    line_2();
+    time(); 
+    delay(50000); 
+    break; 
+  case 10: 
+    line_1(); 
+    lcd_disp("YANA"); 
+    line_2(); 
+    lcd_disp("abizyana"); 
+    delay(50000); 
+    break; 
+  case 12: 
+    line_1(); 
+    lcd_disp("ANNA"); 
+    line_2(); 
+    lcd_disp("BANANNA"): 
+    delay(50000); 
+    break; 
+  default: 
+    break;
+}
+}
+}
 
 init() 
-SCON=x40; 
+{
+SCON=0x40; 
 PCON=0x0; 
-TMOD-0x21; 
-load 
-t0); 
-TH1-253; 
-TL1-253; 
+TMOD=0x21; 
+load_t0(); 
+TH1=253; 
+TL1=253; 
 TR1=1; 
-ITO=1; 
+IT0=1; 
 EX0=1; 
-ETO=1; 
+ET0=1; 
 EA=1; 
-f-0; 
-void 
-load 
-t0) 
-TRO-0; 
-THO-0x3c; 
-TLO=0xb0; 
-TRO=1; 
+f=0; 
+}
 
-lcd 
-init() 
+void load_t0() 
+{
+TR0=0; 
+TH0=0x3c; 
+TL0=0xb0; 
+TR0=1; 
+}
+
+lcd init() 
 { 
-char 
-code 
-codes[4]={0x01,0x06,0x0E,0x3F}; 
-char 
-i; 
-for(i-0;i<4;itt) 
-lcde=codes[i]; 
-char 
-i; 
-delay(5000); 
+char code codes[4]={0x01,0x06,0x0E,0x3F}; 
+char i; 
+for(i-0;i<4;i++)
+  {
+    lcde=codes[i]; 
+    delay(5000); 
+  } 
 } 
-void 
-lcd_disp(char 
-h[) 
-for(i-0:h[il!-10;it+) 
+
+void lcd_disp(char h[]) 
+{
+char i;
+for(i-0:h[i]!='\0' ;i++) 
+  {
 lcdp=h[i]; 
 delay(20); 
+}
+}
 
-w_d) 
-P1_7=0; 
-{ 
+w_d()
+{
+P1_7=0;  
 P1_7=1; 
-delay(long 
-j) 
-for(ij>0;j--) 
-w_d); 
-int_0) 
-interrupt 
-0 
-freq=freqtt; 
-{ 
-46 
+}
+
+delay(long j) 
+{
+for(;j>0;j--) w_d(); 
+}
+
+int_0() interrupt 0 
+{
+freq=freq++;  
 } 
 
-timer 
-0() 
-interrupt 
-1 
-att; 
-if(a>-20) 
-save-freg; 
-freq-0; 
-f-1; 
-a-0; 
-TRO=0; 
-load 
-t00; 
-line 
-1) 
-lcde-0x01; 
-delay(5000); 
-L 
-L 
+timer_0() interrupt 1 
+{
+a++; 
+if(a>=20) 
+{
+save=freg; 
+freq=0; 
+f=1; 
+a=0; 
+TR0=0; 
+}
+load_t0(); 
+}
 
-line 
-_20 
-lcdc=0x0CO; 
+line_1()
+{
+lcdc=0x01; 
 delay(5000); 
-void 
-time) 
-float 
-t 
-cycle; 
-int 
-s[7],i,tc; 
-while(f) 
+} 
+
+line_2()
+{
+lcdc=0x0C0; 
+delay(5000); 
+}
+
+void time() 
+{
+float t_cycle; 
+int s[7],i,tc; 
+while(f)
+{
 EX0=0; 
-line 
-20; 
-t_cycle-(float) 
-1/save* 
-1000000; 
-tc-(int)t_cycle; 
-for(i-6;i>=0;i--) 
-s[il-(tc%10)+0x30; 
-te-tc/10; 
-for(i-0;i<7;i++) 
+line_2(); 
+t_cycle=(float)1/save*1000000; 
+tc=(int)t_cycle; 
+for(i=6;i>=0;i--) 
+{
+s[i]=(tc%10)+0x30; 
+tc=tc/10; 
+}
+for(i=0;i<7;i++) 
 { 
-
-lcdp=s[il: 
-lcd_ 
-disp(" 
-usec"); 
+lcdp=s[i]; 
 delay(20); 
+}
+lcd_disp(" usec"); 
 EX0=1; 
 delay(50000); 
-f-0; 
-load 
-t00; 
-int 
-kbd 
-scan() 
-int 
-c[l={0x0fe,0x0fd,Ox0fb,0x0f7},i,key; 
-w 
-d); 
-for(i-0,key=1;i<4;it) 
-w 
-dO; 
+load_t0();
+f=0; 
+}
+}
+ 
+int kbd_scan() 
+{
+int c[]={0x0fe,0x0fd,0x0fb,0x0f7},i,key; 
+w_d(); 
+for(i=0,key=1;i<4;it) 
+{
+w_d(); 
 Pl=c[i]; 
-if(!col_0) 
-break; 
+if(!col_0) break; 
 key++; 
-if(!col_1) 
-break; 
+if(!col_1) break; 
 key++; 
-if(!col_2) 
-break; 
-
-keytt; 
+if(!col_2) break; 
+key++; 
+}
 return(key); 
+}
 
+
+/* The frequency meter*/
 #include<reg52.h> 
 init(); 
-lcd 
-init(); 
-lcd 
-display(); 
-w_d); 
+lcd_init(); 
+lcd_display(); 
+w_d(); 
 enter(); 
 hz(); 
 delay(int); 
-sbit 
-P1 
-7-P1^7; 
-char 
-xdata 
-lcdp 
-at_ 
-Ox01; 
-char 
-xdata 
-lcdc 
-at 
-Ox00; 
-:5appn 
-Npp5 
-nT1N 
-6.4.2 
-L 
-L 
-L 
+sbit P1_7-P1^7; 
+char xdata lcdp_at_0x01; 
+char xdata lcdc_at_0x00; 
 
-17n 
-7 
+
 main() 
-int 
-x[4],i; 
+int x[4],i; 
 init(); 
-lcd 
-init(); 
-lcd 
-display(); 
-w_d); 
+lcd_init(); 
+lcd_display(); 
+w_d(); 
 enter(); 
-while(1 
-) 
-while(!RI); 
-} 
-RI-0; 
-for(i-0;i<4;it+) 
-hz(); 
+while(1) 
+{ 
+while(!RI);  
+RI=0; 
+for(i=0;i<4;it+) 
 { 
 x[i]=SBUF; 
-lcdp-x[i]; 
+lcdp=x[i]; 
 delay(1); 
-L 
-L 
+}
+hz(); 
+}
+}
 
 init() 
 SCON=0x50; 
 PCON=0x0; 
-TMOD=-0x20; 
-THÍ=253; 
+TMOD=0x20; 
+TH1=253; 
 TL1=253; 
 TR1=1; 
-lcd 
-init() 
-char 
-code 
-codes[4]={0x01,0x03,0x07,0x0F}; 
-char 
-i; 
-for(i-0;i<4;it+) 
+}
+
+lcd_init() 
+{
+char code codes[4]={0x01,0x03,0x07,0x0F}; 
+char i; 
+for(i=0;i<4;it+) 
 { 
 lcde=codes[il; 
-delay(1000); 
-53 
+delay(1000);  
+}
+}
 
+lcd_display ()
+{
+char code msg[]="frequency="; 
+char i=0; 
 } 
-lcd 
-char 
-code 
-msg]="frequency=; 
-char 
-i-0; 
-w_d) 
-} 
-for(;msg[i]!=\0;it+) 
-P1 
-7-0; 
-P1 
-_7=1; 
-lcdp=msg[il: 
-delay(int 
-j) 
-w_ 
-d); 
+for(;msg[i]!='\0';i++) 
+{
+lcdp=msg[i]: 
 delay(1); 
-for(j-j*40j>0;j--); 
-s4 
-_display) 
+}
+}
+
+w_d() 
+{
+P1_7=0; 
+P1_7=1; 
+}
+
+delay(int j)
+{
+w_d(); 
+for(j=j*40;j>0;j--); 
+}
 
 enter() 
+{
 lcdc=0x0C0; 
 delay(1000); 
+}
+
 hz() 
 { 
-char 
-code 
-hertz[]" 
-Hz"; 
-char 
-i; 
-for(i-0;hertz[i]!=\0';it+) 
-lcdp=hertzli); 
+char code hertz[]=" Hz"; 
+char i; 
+for(i=0;hertz[i]!='\0';i++)
+{
+lcdp=hertz[i]; 
 delay(1); 
-
+}
+}
